@@ -12,6 +12,6 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
-    outDir: 'build', // matches your local build
+    outDir: 'dist', // matches your local build
   },
 });
