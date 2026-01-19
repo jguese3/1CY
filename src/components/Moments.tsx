@@ -1,8 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Card } from './ui/card';
-import { Button } from './ui/button';
-import { Textarea } from './ui/textarea';
-import { Input } from './ui/input';
 import { Plus, X, Heart, Edit2, Trash2 } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { projectId, publicAnonKey } from '../utils/supabase/info';
@@ -192,100 +188,109 @@ export function Moments() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl text-gray-800">Shared Moments</h2>
-        <Button
+        <h2 className="text-2xl font-bold text-gray-800">Shared Moments</h2>
+        <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-blue-600 hover:bg-blue-700"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           {showForm ? (
             <>
-              <X className="w-4 h-4 mr-2" />
+              <X className="w-4 h-4" />
               Cancel
             </>
           ) : (
             <>
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="w-4 h-4" />
               Share Moment
             </>
           )}
-        </Button>
+        </button>
       </div>
 
       {showForm && (
-        <Card className="p-6 bg-white shadow-md">
+        <div className="p-6 bg-white rounded-lg shadow-md">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm text-gray-700 mb-2">Your Name</label>
-              <Input
+              <label className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+              <input
+                type="text"
                 value={newMoment.author}
                 onChange={(e) => setNewMoment({ ...newMoment, author: e.target.value })}
                 placeholder="Enter your name"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-700 mb-2">Image URL</label>
-              <Input
+              <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+              <input
+                type="text"
                 value={newMoment.imageUrl}
                 onChange={(e) => setNewMoment({ ...newMoment, imageUrl: e.target.value })}
                 placeholder="https://example.com/image.jpg"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-700 mb-2">Caption</label>
-              <Textarea
+              <label className="block text-sm font-medium text-gray-700 mb-2">Caption</label>
+              <textarea
                 value={newMoment.caption}
                 onChange={(e) => setNewMoment({ ...newMoment, caption: e.target.value })}
                 placeholder="Share what made this moment special..."
                 rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+            <button
+              type="submit"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
               Share Moment
-            </Button>
+            </button>
           </form>
-        </Card>
+        </div>
       )}
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {moments.map((moment) => (
-          <Card key={moment.id} className="overflow-hidden bg-white shadow-md hover:shadow-lg transition-shadow">
+          <div key={moment.id} className="overflow-hidden bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
             {editingId === moment.id ? (
               <div className="p-4 space-y-4">
                 <div>
-                  <label className="block text-sm text-gray-700 mb-2">Image URL</label>
-                  <Input
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+                  <input
+                    type="text"
                     value={editMoment.imageUrl}
                     onChange={(e) => setEditMoment({ ...editMoment, imageUrl: e.target.value })}
                     placeholder="https://example.com/image.jpg"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-700 mb-2">Caption</label>
-                  <Textarea
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Caption</label>
+                  <textarea
                     value={editMoment.caption}
                     onChange={(e) => setEditMoment({ ...editMoment, caption: e.target.value })}
                     placeholder="Caption"
                     rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Button
+                  <button
                     onClick={() => handleEditSubmit(moment.id)}
-                    className="bg-blue-600 hover:bg-blue-700"
-                    size="sm"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                   >
                     Save
-                  </Button>
-                  <Button
+                  </button>
+                  <button
                     onClick={handleEditCancel}
-                    variant="outline"
-                    size="sm"
+                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     Cancel
-                  </Button>
+                  </button>
                 </div>
               </div>
             ) : (
@@ -297,29 +302,25 @@ export function Moments() {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Button
+                    <button
                       onClick={() => handleEditStart(moment)}
-                      variant="ghost"
-                      size="sm"
-                      className="bg-white/80 hover:bg-white text-gray-600 hover:text-blue-600"
+                      className="p-2 bg-white/90 hover:bg-white text-gray-600 hover:text-blue-600 rounded shadow transition-colors"
                     >
                       <Edit2 className="w-4 h-4" />
-                    </Button>
-                    <Button
+                    </button>
+                    <button
                       onClick={() => handleDelete(moment.id)}
-                      variant="ghost"
-                      size="sm"
-                      className="bg-white/80 hover:bg-white text-gray-600 hover:text-red-600"
+                      className="p-2 bg-white/90 hover:bg-white text-gray-600 hover:text-red-600 rounded shadow transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
-                    </Button>
+                    </button>
                   </div>
                 </div>
                 <div className="p-4">
                   <p className="text-gray-700 mb-3">{moment.caption}</p>
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="text-sm text-gray-600">{moment.author}</p>
+                      <p className="text-sm font-medium text-gray-600">{moment.author}</p>
                       <p className="text-xs text-gray-500">
                         {new Date(moment.date).toLocaleDateString('en-US', {
                           month: 'short',
@@ -332,15 +333,17 @@ export function Moments() {
                       className="flex items-center gap-1 text-red-500 hover:text-red-600 transition-colors"
                     >
                       <Heart className="w-5 h-5 fill-current" />
-                      <span className="text-sm">{moment.likes}</span>
+                      <span className="text-sm font-medium">{moment.likes}</span>
                     </button>
                   </div>
                 </div>
               </>
             )}
-          </Card>
+          </div>
         ))}
       </div>
     </div>
   );
 }
+
+

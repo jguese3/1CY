@@ -1,8 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Card } from './ui/card';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
 import { Plus, X, MapPin, Clock, Users, Edit2, Trash2 } from 'lucide-react';
 import { projectId, publicAnonKey } from '../utils/supabase/info';
 
@@ -211,165 +207,178 @@ export function Events() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl text-gray-800">Upcoming Events</h2>
-        <Button
+        <h2 className="text-2xl font-bold text-gray-800">Upcoming Events</h2>
+        <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-blue-600 hover:bg-blue-700"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           {showForm ? (
             <>
-              <X className="w-4 h-4 mr-2" />
+              <X className="w-4 h-4" />
               Cancel
             </>
           ) : (
             <>
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="w-4 h-4" />
               Plan Event
             </>
           )}
-        </Button>
+        </button>
       </div>
 
       {showForm && (
-        <Card className="p-6 bg-white shadow-md">
+        <div className="p-6 bg-white rounded-lg shadow-md">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm text-gray-700 mb-2">Event Title</label>
-              <Input
+              <label className="block text-sm font-medium text-gray-700 mb-2">Event Title</label>
+              <input
+                type="text"
                 value={newEvent.title}
                 onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
                 placeholder="Event name"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-gray-700 mb-2">Date</label>
-                <Input
+                <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                <input
                   type="date"
                   value={newEvent.date}
                   onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-700 mb-2">Time</label>
-                <Input
+                <label className="block text-sm font-medium text-gray-700 mb-2">Time</label>
+                <input
                   type="time"
                   value={newEvent.time}
                   onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm text-gray-700 mb-2">Location</label>
-              <Input
+              <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+              <input
+                type="text"
                 value={newEvent.location}
                 onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
                 placeholder="Event location"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-700 mb-2">Description</label>
-              <Textarea
+              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <textarea
                 value={newEvent.description}
                 onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
                 placeholder="Event details..."
                 rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+            <button
+              type="submit"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
               Create Event
-            </Button>
+            </button>
           </form>
-        </Card>
+        </div>
       )}
 
       <div className="grid gap-4 md:grid-cols-2">
         {events.map((event) => (
-          <Card key={event.id} className="p-6 bg-white shadow-md hover:shadow-lg transition-shadow">
+          <div key={event.id} className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
             {editingId === event.id ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm text-gray-700 mb-2">Event Title</label>
-                  <Input
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Event Title</label>
+                  <input
+                    type="text"
                     value={editEvent.title}
                     onChange={(e) => setEditEvent({ ...editEvent, title: e.target.value })}
                     placeholder="Event name"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-gray-700 mb-2">Date</label>
-                    <Input
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                    <input
                       type="date"
                       value={editEvent.date}
                       onChange={(e) => setEditEvent({ ...editEvent, date: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-gray-700 mb-2">Time</label>
-                    <Input
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Time</label>
+                    <input
                       type="time"
                       value={editEvent.time}
                       onChange={(e) => setEditEvent({ ...editEvent, time: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-700 mb-2">Location</label>
-                  <Input
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                  <input
+                    type="text"
                     value={editEvent.location}
                     onChange={(e) => setEditEvent({ ...editEvent, location: e.target.value })}
                     placeholder="Event location"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-700 mb-2">Description</label>
-                  <Textarea
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                  <textarea
                     value={editEvent.description}
                     onChange={(e) => setEditEvent({ ...editEvent, description: e.target.value })}
                     placeholder="Event details..."
                     rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Button
+                  <button
                     onClick={() => handleEditSubmit(event.id)}
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                   >
                     Save
-                  </Button>
-                  <Button
+                  </button>
+                  <button
                     onClick={handleEditCancel}
-                    variant="outline"
+                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     Cancel
-                  </Button>
+                  </button>
                 </div>
               </div>
             ) : (
               <>
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl text-blue-900">{event.title}</h3>
+                  <h3 className="text-xl font-semibold text-blue-900">{event.title}</h3>
                   <div className="flex gap-1">
-                    <Button
+                    <button
                       onClick={() => handleEditStart(event)}
-                      variant="ghost"
-                      size="sm"
-                      className="text-gray-600 hover:text-blue-600"
+                      className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
                     >
                       <Edit2 className="w-4 h-4" />
-                    </Button>
-                    <Button
+                    </button>
+                    <button
                       onClick={() => handleDelete(event.id)}
-                      variant="ghost"
-                      size="sm"
-                      className="text-gray-600 hover:text-red-600"
+                      className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
-                    </Button>
+                    </button>
                   </div>
                 </div>
                 <p className="text-gray-700 mb-4">{event.description}</p>
@@ -397,17 +406,19 @@ export function Events() {
                   </div>
                 </div>
 
-                <Button
+                <button
                   onClick={() => handleRSVP(event.id)}
-                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   RSVP
-                </Button>
+                </button>
               </>
             )}
-          </Card>
+          </div>
         ))}
       </div>
     </div>
   );
 }
+
+
